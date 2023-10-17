@@ -1,6 +1,8 @@
 # Lab1-Bomb
 
-This is the repository of the bomb lab in CS3601, 2022 Fall.
+This is the repository of the bomb lab in SJTU CS3601, 2022/2023 Fall.
+
+An online tutorial: [https://www.bilibili.com/video/BV1q94y1a7BF/?vd_source=63231f40c83c4d292b2a881fda478960]
 
 ## Get Your Bomb
 **Please enter your student number CORRECTLY in student-number.txt at first!!!**
