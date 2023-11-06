@@ -139,7 +139,15 @@ static void choose_new_current_slab(struct slab_pointer *pool, int order)
         /* LAB 2 TODO 2 BEGIN */
         /* Hint: Choose a partial slab to be a new current slab. */
         /* BLANK BEGIN */
-
+        struct slab_header *slab;
+        if (list_empty(&pool->partial_slab_list)) {
+                slab = init_slab_cache(order, SIZE_OF_ONE_SLAB);
+                pool->current_slab = slab;
+                return;
+        }
+        slab = list_entry(pool->partial_slab_list.next,struct slab_header, node);
+        list_del(pool[order].partial_slab_list.next);
+        pool->current_slab = slab;
         /* BLANK END */
         /* LAB 2 TODO 2 END */
 }
@@ -169,7 +177,14 @@ static void *alloc_in_slab_impl(int order)
          * If current slab is full, choose a new slab as the current one.
          */
         /* BLANK BEGIN */
-
+        if (current_slab->current_free_cnt==0) {
+                choose_new_current_slab(&slab_pool[order],order);
+                current_slab = slab_pool[order].current_slab;
+        }
+        current_slab->current_free_cnt--;
+        free_list = current_slab->free_list_head;
+        next_slot = free_list->next_free;
+        current_slab->free_list_head = next_slot;
         /* BLANK END */
         /* LAB 2 TODO 2 END */
 
@@ -296,7 +311,9 @@ void free_in_slab(void *addr)
          * Hint: Free an allocated slot and put it back to the free list.
          */
         /* BLANK BEGIN */
-
+        slot->next_free = slab->free_list_head;
+        slab->free_list_head = slot;
+        slab->current_free_cnt++;
         /* BLANK END */
         /* LAB 2 TODO 2 END */
 
