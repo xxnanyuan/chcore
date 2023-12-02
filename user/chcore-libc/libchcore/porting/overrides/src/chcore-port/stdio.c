@@ -129,7 +129,7 @@ static int get_one_char(void)
 static void put(char buffer[], unsigned size)
 {
         /* LAB 3 TODO BEGIN */
-
+        usys_putstr((vaddr_t) buffer,size);
         /* LAB 3 TODO END */
 }
 
